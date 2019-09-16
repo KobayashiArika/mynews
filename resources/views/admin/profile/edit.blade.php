@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <title>Create</title>
+        <title>Edit</title>
     </head>
     <body>
-        <h1>Create</h1>
+        <h1>Edit</h1>
     </body>
 </html>
