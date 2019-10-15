@@ -21,7 +21,6 @@ Route::group(['prefix' => 'admin'], function() {
 });
 //課題3
 Route::get('XXX','AAAControllre@bbb');
-//4
 
 Auth::routes();
 
@@ -29,5 +28,13 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('logout', 'Auth\LoginController@logout');
 
-
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+     Route::get('news/create', 'Admin\NewsController@add');
+     Route::post('news/create', 'Admin\NewsController@create'); 
+});
+//22章-課題3,6
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+     Route::post('profile/create', 'Admin\ProfileController@create');
+     Route::post('profile/edit', 'Admin\ProfileController@update');
+});
 
