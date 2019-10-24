@@ -12,8 +12,21 @@ class ProfileController extends Controller
     {
         return view('admin.profile.create');
     }
-    public function create()
+    public function create(Request $request)
     {
+       $validatedData = $request->validate([
+           'name' => 'required',
+           'gender' => 'required',
+           'hobby' => 'required',
+           'introduction' => 'required',
+           ]);
+           
+       $profile = new Profile();
+       $profile->name = $validatedData['name'];
+       $profile->gender = $validatedData['gender'];
+       $profile->hobby = $validatedData['hobby'];
+       $profile->inroduction = $validatedData['introduction'];
+       $form = $request->all();
         return redirect('admin/profile/create');
     }
     public function edit()
