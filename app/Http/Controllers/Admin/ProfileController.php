@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Profile;
 
 class ProfileController extends Controller
 {
@@ -26,7 +27,7 @@ class ProfileController extends Controller
        $profile->gender = $validatedData['gender'];
        $profile->hobby = $validatedData['hobby'];
        $profile->inroduction = $validatedData['introduction'];
-       $form = $request->all();
+       $profile->save();
         return redirect('admin/profile/create');
     }
     public function edit()

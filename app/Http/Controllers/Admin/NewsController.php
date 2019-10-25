@@ -17,8 +17,7 @@ class NewsController extends Controller
     public function create(Request $request)
     {
        
-       $this->validate($request, News::$rules);
-       $validatedData = $request->validata([
+        $validatedData = $request->validate([
            'title' => 'required',
            'body' => 'required',
            'image' => 'image'
