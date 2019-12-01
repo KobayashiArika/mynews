@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Profile;
+use Carbon\Carbon;
+use App\ProfileHistory;
 
 class ProfileController extends Controller
 {
@@ -15,27 +17,42 @@ class ProfileController extends Controller
     }
     public function create(Request $request)
     {
-       $validatedData = $request->validate([
-           'name' => 'required',
-           'gender' => 'required',
-           'hobby' => 'required',
-           'introduction' => 'required',
-           ]);
-           
-       $profile = new Profile();
-       $profile->name = $validatedData['name'];
-       $profile->gender = $validatedData['gender'];
-       $profile->hobby = $validatedData['hobby'];
-       $profile->inroduction = $validatedData['introduction'];
-       $profile->save();
+        
+       $this->validate($request, Profile::$rules);
+       $profiles = new Profile;
+       $form = $request->all();
+       $profiles->fill($form);
+       $profiles->save();
         return redirect('admin/profile/create');
     }
-    public function edit()
+    
+    
+    public function edit(Request $request)
     {
-        return view('admin.profile.edit');
+        //Plofile Modelからde-tawo取得
+        $profiles = Profile::find($request->id);
+        if(empty($profiles)){
+            abort(404);
+        }
+        return view('admin.profile.edit', ['profiles_form' => $profiles]);
     }
-    public function update()
+    public function update(Request $request)
     {
-        return redirect('admin/profile/edit');
+        //Validation
+        $this->validate($request, Profile::$rules);
+         // Profile Modelからデータを取得する
+      $profiles = Profile::find($request->id);
+      // 送信されてきたフォームデータを格納する
+      $profiles_form = $request->all();
+      unset($profiles_form['_token']);
+
+      // 該当するデータを上書きして保存する
+      $profiles->fill($profiles_form)->save();
+      $history = new ProfileHistory;
+        $history->profile_id = $profiles->id;
+        $history->edited_at = Carbon::now();
+        $history->save();
+      
+        return redirect('admin/profile/edit?id='.$profiles->id);
     }
 }
