@@ -17,12 +17,15 @@
                                     {{ $profile->name }}
                                 </div>
                                 <div class="body mt-3">
+                                    <label for="">性別</label>
                                     {{ $profile->gender }}
                                 </div>
                                 <div class="body mt-3">
+                                    <label for="">趣味</label>
                                     {{ $profile->hobby }}
                                 </div>
                                 <div class="body mt-3">
+                                    <label for="">自己紹介</label>
                                     {{ $profile->introduction }}
                                 </div>
                             </div>
